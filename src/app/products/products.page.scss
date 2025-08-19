@@ -1,0 +1,93 @@
+.image-container {
+  display: flex;
+  justify-content: center;
+  img {
+    width: 70%;
+    border-radius: 20px;
+  }
+}
+
+.details-container {
+  background: #fff;
+  border-radius: 30px 30px 0 0;
+  padding: 20px;
+  margin-top: -20px;
+}
+
+.product-title {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.price-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  .old-price {
+    text-decoration: line-through;
+    color: #999;
+  }
+
+  .new-price {
+    color: #e91e63;
+    font-weight: bold;
+  }
+}
+
+.section {
+  margin-bottom: 20px;
+
+  .label {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .sizes ion-button {
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+
+  .colors {
+    display: flex;
+    gap: 10px;
+
+    .color-dot {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+    }
+  }
+}
+
+.description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  ion-button {
+    flex: 1;
+    margin-left: 10px;
+  }
+
+}.btn{
+          --background:#ff8f8f ;
+
+}

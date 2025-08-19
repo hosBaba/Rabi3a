@@ -1,0 +1,45 @@
+.login-bg {
+  --background: white;
+  .header-shape {
+    background: #ff8f8f;
+    height: 50%;
+    border-bottom-left-radius: 60% 20%;
+    border-bottom-right-radius: 60% 20%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .login-form {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    padding: 0 20px;
+    h2 {
+      font-weight: bold;
+      margin-bottom: 24px;
+    }
+    ion-item {
+      margin-bottom: 12px;
+      --background: transparent;
+    }
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin: 12px 0;
+      
+    }
+    .bt{
+        --background:#ff8f8f ;
+      }
+    .signup {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .forgot {
+      text-decoration: underline;
+    }
+  }
+}

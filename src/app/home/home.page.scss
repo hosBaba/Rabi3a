@@ -24,17 +24,15 @@
    
 }
 
-.footer{
-   border-bottom-left-radius: 60% 20%;
-    border-bottom-right-radius: 60% 20%;
-}
+
 
 ion-card {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 16px;        /* زوايا ناعمة */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* ظل ناعم */
+  overflow: hidden;           /* حتى الصورة تكون مقصوصة بزوايا الكارد */
+  transition: transform 0.2s ease-in-out;
   ion-img {
-    height: 160px;
+    height: 170px;
     object-fit: cover;
   }
 

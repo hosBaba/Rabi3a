@@ -22,28 +22,28 @@ export class HomePage {
       title: "Men's Sleeve T-Shirt",
       price: 50,
       oldPrice: 65.9,
-      image: 'assets/imgs/product2.jpg',
+      image: 'assets/bag2.webp',
       favorite: false
     },
     {
       title: 'Triple Zip Pocket La',
       price: 45,
       oldPrice: 55.5,
-      image: 'assets/imgs/product3.jpg',
+      image: 'assets/bag3.webp',
       favorite: true
     },
     {
       title: 'Apple Watch Resin',
       price: 95,
       oldPrice: 100,
-      image: 'assets/imgs/product4.jpg',
+      image: 'assets/bag4.webp',
       favorite: false
     },
     {
       title: 'Bracelet Elegant',
       price: 20,
       oldPrice: 30,
-      image: 'assets/imgs/product5.jpg',
+      image: 'assets/bag5.webp',
       favorite: true
     },
     {

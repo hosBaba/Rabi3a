@@ -1,53 +1,83 @@
-<ion-header translucent>
- <ion-toolbar>
-     <ion-buttons slot="start">
+<div class="ion-page" id="main-content">
+
+
+  <ion-header>
+    <ion-toolbar class="toolbar">
+      <ion-buttons slot="start">
         <ion-back-button defaultHref="/home"></ion-back-button>
       </ion-buttons>
- </ion-toolbar>
-</ion-header>
+      <ion-title class="title"> AddProduct </ion-title>
+    </ion-toolbar>
+   
+  </ion-header>
 
-<ion-content fullscreen>
+  <ion-content>
+    <div class="add-product-container">
+      <h2>Ajouter la voiture</h2>
+    
+      <form [formGroup]="productForm">
+        <!-- اسم المنتج -->
+        <div class="form-group">
+          <label for="name">Type de voiture</label>
+          <input id="name" type="text" formControlName="type" placeholder="Entrez le type de voiture" />
+        </div>
 
- <swiper-container [pagination]="true" class="product-slider">
-  <swiper-slide>
-    <img src="assets/bag.jpg" alt="Boston Lettuce" />
-  </swiper-slide>
-  <swiper-slide>
-    <img src="assets/shoe.jpeg" alt="Boston Lettuce" />
-  </swiper-slide>
-</swiper-container>
+        <div class="form-group">
+          <label for="name">Modele de voiture</label>
+          <input id="name" type="text" formControlName="model" placeholder="Entrez le modele de voiture" />
+        </div>
 
-  <!-- Carte produit -->
-  <div class="product-card">
-    <h1>Boston Lettuce</h1>
+        
+    
+        <!-- سعر المنتج -->
+        <div class="form-group">
+          <label for="price">Prix</label>
+          <input id="price" type="number" formControlName="price" placeholder="Entrez le prix" />
+        </div>
+    
+        <!-- وصف المنتج -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" formControlName="description" placeholder="Entrez une description"></textarea>
+        </div>
+    
+       <!--  رفع صورة المنتج -->
+      <div class="form-group">
+          <label for="imageFile">Photo de voiture</label>
+    <input type="file" (change)="onFileChange($event)" />
+        </div>  
 
-    <div class="price-section">
-      <span class="price">1.10</span>
-      <span class="currency">€</span>
-      <span class="unit"> / piece</span>
-    </div>
-
-    <p class="weight">~ 150 gr / piece</p>
-
-    <h2>Spain</h2>
-    <p class="description">
-      Lettuce is an annual plant of the daisy family, Asteraceae.
-      It is most often grown as a leaf vegetable, but sometimes for its stem and seeds.
-      Lettuce is most often used for salads, although it is also seen in other kinds of food,
-      such as soups, sandwiches and wraps; it can also be grilled.
-    </p>
-
-    <!-- Boutons -->
-    <div class="actions">
-      <ion-button fill="outline" shape="round" class="favorite-btn">
-        <ion-icon name="heart-outline"></ion-icon>
-      </ion-button>
-
-      <ion-button expand="block" shape="round" class="add-btn">
-        <ion-icon name="cart-outline" slot="start"></ion-icon>
-        ADD TO CART
-      </ion-button>
-    </div>
+       <!--  <input id="video" type="file" (change)="videoUpload($event)" accept="video/*">
+<div class="form-group">
+  <div *ngIf="videoUrl">
+    <h3>Video Uploaded Successfully!</h3>
+    <video controls >
+      <source [src]="videoUrl" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
+</div> -->
+        
+    
+        <!-- معاينة الصورة -->
+        <div class="image-preview" *ngIf="imagePreview">
+          <h4>Aperçu de l'image :</h4>
+          <img [src]="imagePreview" alt="Aperçu de l'image" />
+        </div> 
+ 
+        <!-- زر الإضافة -->
+        <button type="submit" [disabled]="productForm.invalid">Ajouter le produit</button>
+      </form>
+    </div>
 
-</ion-content>
+
+
+
+
+   
+   
+
+    
+  </ion-content>
+
+  

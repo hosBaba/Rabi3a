@@ -16,10 +16,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
-  {
-    path: 'products',
-    loadChildren: () => import('./products/products.module').then( m => m.ProductsPageModule)
-  },
+ 
   
   {
     path: 'profile',
@@ -28,6 +25,10 @@ const routes: Routes = [
   {
     path: 'add-product',
     loadChildren: () => import('./add-product/add-product.module').then( m => m.AddProductPageModule)
+  },
+  {
+    path: 'show-product',
+    loadChildren: () => import('./show-product/show-product.module').then( m => m.ShowProductPageModule)
   },
 ];
 

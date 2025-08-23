@@ -26,17 +26,15 @@ selectedFiles: File[] = [];
   constructor(   private router:Router, private fb:FormBuilder) {
     this.productForm = this.fb.group({
       type: ['', [Validators.required, Validators.minLength(3)]],
-      model: ['', [Validators.required, Validators.minLength(3)]],
-      price: [null, [Validators.required, Validators.min(1)]],
+      price: ['', [Validators.required, Validators.minLength(3)]],
+      priceReduit: [null, [Validators.required, Validators.min(1)]],
       description: ['', Validators.required],
       File: [null, Validators.required] // حقل الملف
     });
    }
 
   ngOnInit() {
-     this.productForm = this.fb.group({
-      file: [null]
-    });
+    
   }
 
     // معالجة رفع الصورة

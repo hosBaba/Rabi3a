@@ -1,0 +1,114 @@
+
+<ion-header collapse="fade" class="app-header">
+  <ion-toolbar class="toolbar">
+    <ion-title>Ajouter une vidéo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" [disabled]="isUploading" (click)="resetForm()">
+        Réinitialiser
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="bg">
+  <div class="container">
+    <ion-card class="glass">
+      <ion-card-header>
+        <ion-card-title>Informations</ion-card-title>
+        <ion-card-subtitle>Ajoutez un titre, une description et votre fichier vidéo</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <div class="grid">
+            <div class="left">
+              <div class="dropzone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+                <input id="videoInput" type="file" accept="video/*" (change)="onFileInputChange($event)" hidden>
+
+                <ng-container *ngIf="!videoPreview; else previewTpl">
+                  <ion-icon name="cloud-upload-outline" class="icon"></ion-icon>
+                  <h3>Glissez-déposez votre vidéo ici</h3>
+                  <p>ou</p>
+                  <ion-button size="small"  (click)="triggerFileInput()" >Choisir un fichier</ion-button>
+                  <small class="muted">Formats pris en charge: MP4, WebM, MOV…</small>
+                </ng-container>
+
+                <ng-template #previewTpl>
+                  <video class="preview" [src]="videoPreview" controls playsinline></video>
+                  <div class="file-meta" *ngIf="videoFile">
+                    <ion-chip>{{ videoFile.name }}</ion-chip>
+                    <ion-chip>{{ (videoFile.size / (1024*1024) ) | number:'1.0-1' }} Mo</ion-chip>
+                  </div>
+                  <div class="actions">
+                    <ion-button fill="outline" size="small" >Changer</ion-button>
+                    <ion-button fill="clear" size="small" color="danger" (click)="resetForm()">Retirer</ion-button>
+                  </div>
+                </ng-template>
+              </div>
+
+              <div *ngIf="isUploading" class="progress-wrap">
+                <ion-progress-bar [value]="uploadProgress"></ion-progress-bar>
+                <small>{{ (uploadProgress*100) | number:'1.0-0' }}%</small>
+              </div>
+            </div>
+
+            <div class="right">
+              <ion-item class="field" fill="outline">
+                <ion-label position="floating">Titre *</ion-label>
+                <ion-input formControlName="title" maxlength="80"></ion-input>
+              </ion-item>
+              <div class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+                Le titre est requis (min 3 caractères).
+              </div>
+
+              <ion-item class="field" fill="outline">
+                <ion-label position="floating">Description</ion-label>
+                <ion-textarea formControlName="description" maxlength="500" autoGrow="true"></ion-textarea>
+              </ion-item>
+
+              <ion-item class="field" fill="outline">
+                <ion-label>Catégorie</ion-label>
+                <ion-select interface="popover" formControlName="category">
+                  <ion-select-option *ngFor="let c of categories" [value]="c">{{ c }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item class="field" fill="outline">
+                <ion-label>Visibilité</ion-label>
+                <ion-select interface="popover" formControlName="visibility">
+                  <ion-select-option *ngFor="let v of visibilities" [value]="v.value">{{ v.label }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item lines="none" class="toggle-line">
+                <ion-label>Autoriser les commentaires</ion-label>
+                <ion-toggle formControlName="allowComments"></ion-toggle>
+              </ion-item>
+
+              <div class="tags">
+                <ion-label>Tags</ion-label>
+                <div class="tag-input">
+                  <ion-input placeholder="Appuyez Entrée pour ajouter" (keyup.enter)="addTagFromInput($event)"></ion-input>
+                </div>
+                <div class="tag-list" *ngIf="tags.length">
+                  <ion-chip *ngFor="let t of tags.controls; let i = index">
+                    {{ t.value }}
+                    <ion-icon name="close" (click)="removeTag(i)" class="chip-close"></ion-icon>
+                  </ion-chip>
+                </div>
+              </div>
+
+              <div class="actions-submit">
+                <ion-button type="submit" [disabled]="isUploading" size="large" class="submit-btn">
+                  <ion-icon slot="start" name="cloud-upload"></ion-icon>
+                  Publier la vidéo
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+

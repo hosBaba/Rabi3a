@@ -50,7 +50,7 @@ export class HomePage {
       title: 'Women Shoes',
       price: 40,
       oldPrice: 60,
-      image: 'assets/imgs/product6.jpg',
+      image: 'assets/bag3.webp',
       favorite: false
     }
   ];
@@ -75,5 +75,7 @@ export class HomePage {
     console.log("حذف الحساب");
     // هنا كود حذف الحساب
   }
+
+  
 
 }

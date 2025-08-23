@@ -1,10 +1,10 @@
 <ion-header translucent>
-  <ion-toolbar>
+  <ion-toolbar class="toolbar">
    <ion-buttons slot="start">
         <ion-back-button defaultHref="/product"></ion-back-button>
       </ion-buttons>
 
-    <ion-title>Profile</ion-title>
+    <ion-title class="title">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,38 +26,12 @@
   <!-- Settings List -->
   <ion-list lines="none" class="settings-list">
 
-    <ion-item>
-      <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
-      <ion-label>
-        <h3>My Account</h3>
-        <p>Make changes to your account</p>
-      </ion-label>
-      <ion-icon name="alert-circle" color="danger" slot="end"></ion-icon>
-    </ion-item>
+  
 
     <ion-item button>
-      <ion-icon name="people-outline" slot="start" color="medium"></ion-icon>
+      <ion-icon name="bar-chart-outline" slot="start" color="medium"></ion-icon>
       <ion-label>
-        <h3>Saved Beneficiary</h3>
-        <p>Manage your saved account</p>
-      </ion-label>
-      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
-      <ion-label>
-        <h3>Face ID / Touch ID</h3>
-        <p>Manage your device security</p>
-      </ion-label>
-      <ion-toggle slot="end" [(ngModel)]="faceIdEnabled"></ion-toggle>
-    </ion-item>
-
-    <ion-item button>
-      <ion-icon name="shield-outline" slot="start" color="medium"></ion-icon>
-      <ion-label>
-        <h3>Two-Factor Authentication</h3>
-        <p>Further secure your account for </p>
+        <h3>Historique des ventes</h3>
       </ion-label>
       <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
     </ion-item>
@@ -65,8 +39,7 @@
     <ion-item button>
       <ion-icon name="log-out-outline" slot="start" color="medium"></ion-icon>
       <ion-label>
-        <h3>Log out</h3>
-        <p>Further secure your account for safety</p>
+        <h3>Deconexion</h3>
       </ion-label>
       <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
     </ion-item>
@@ -78,18 +51,12 @@
     <ion-item button>
       <ion-icon name="help-circle-outline" slot="start" color="medium"></ion-icon>
       <ion-label>
-        <h3>Help & Support</h3>
+        <h3>Aide & Support</h3>
       </ion-label>
       <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
     </ion-item>
 
-    <ion-item button>
-      <ion-icon name="heart-outline" slot="start" color="medium"></ion-icon>
-      <ion-label>
-        <h3>About App</h3>
-      </ion-label>
-      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item>
+   
   </ion-list>
 
 </ion-content>

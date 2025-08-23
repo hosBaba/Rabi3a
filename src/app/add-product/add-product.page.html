@@ -1,64 +1,57 @@
-<div class="ion-page" id="main-content">
-
-
-  <ion-header>
-    <ion-toolbar class="toolbar">
+<ion-header>
+  <ion-toolbar class="toolbar">
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/home"></ion-back-button>
       </ion-buttons>
-      <ion-title class="title"> AddProduct </ion-title>
-    </ion-toolbar>
-   
-  </ion-header>
 
-  <ion-content>
-    <div class="add-product-container">
-      <h2>Ajouter la voiture</h2>
+    <ion-title class="title">Add product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+ <div class="add-product-container">
     
-      <form [formGroup]="productForm">
+      <form [formGroup]="productForm" >
         <!-- اسم المنتج -->
-        <div class="form-group">
-          <label for="name">Type de voiture</label>
-          <input id="name" type="text" formControlName="type" placeholder="Entrez le type de voiture" />
-        </div>
+        
+ <div class="form-group">
+<ion-item>
+      <ion-select formControlName="type" placeholder="Choisissez le type">
+      <ion-select-option value="voile">Voile</ion-select-option>
+      <ion-select-option value="banana">Robe</ion-select-option>
+      <ion-select-option value="orange">Sac</ion-select-option>
+    </ion-select>
+  </ion-item>
 
+ </div>
+        
+  
         <div class="form-group">
-          <label for="name">Modele de voiture</label>
-          <input id="name" type="text" formControlName="model" placeholder="Entrez le modele de voiture" />
+          <label for="name">Prix</label>
+          <ion-input id="name" type="number" formControlName="price" placeholder="Entrez le prix "></ion-input>
         </div>
 
         
     
         <!-- سعر المنتج -->
         <div class="form-group">
-          <label for="price">Prix</label>
-          <input id="price" type="number" formControlName="price" placeholder="Entrez le prix" />
+          <label for="price">Prix reduit (pas obligatoire)</label>
+          <ion-input id="price" type="number" formControlName="priceReduit" placeholder="Entrez le prix"></ion-input>
         </div>
     
         <!-- وصف المنتج -->
         <div class="form-group">
-          <label for="description">Description</label>
-          <textarea id="description" formControlName="description" placeholder="Entrez une description"></textarea>
+        <label for="description">Description</label>
+        <ion-textarea  id="description" formControlName="description" placeholder="Entrez une description"></ion-textarea>
+
         </div>
     
        <!--  رفع صورة المنتج -->
-      <div class="form-group">
+       <div class="form-group">
           <label for="imageFile">Photo de voiture</label>
-    <input type="file" (change)="onFileChange($event)" />
+          <input id="imageFile" type="file" #fileInput multiple  (change)="onFileChange($event)" />
         </div>  
 
-       <!--  <input id="video" type="file" (change)="videoUpload($event)" accept="video/*">
-<div class="form-group">
-  <div *ngIf="videoUrl">
-    <h3>Video Uploaded Successfully!</h3>
-    <video controls >
-      <source [src]="videoUrl" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-</div> -->
-        
-    
         <!-- معاينة الصورة -->
         <div class="image-preview" *ngIf="imagePreview">
           <h4>Aperçu de l'image :</h4>
@@ -66,18 +59,12 @@
         </div> 
  
         <!-- زر الإضافة -->
-        <button type="submit" [disabled]="productForm.invalid">Ajouter le produit</button>
+  <ion-button expand="block" shape="round" class="btn">
+        <ion-icon  slot="start"></ion-icon>
+        ADD 
+      </ion-button>
       </form>
     </div>
 
 
-
-
-
-   
-   
-
-    
-  </ion-content>
-
-  
+</ion-content>

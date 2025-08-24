@@ -73,14 +73,30 @@
                 </ion-select>
               </ion-item>
 
-              
+              <ion-item class="field" fill="outline">
+                <ion-label>Visibilité</ion-label>
+                <ion-select interface="popover" formControlName="visibility">
+                  <ion-select-option *ngFor="let v of visibilities" [value]="v.value">{{ v.label }}</ion-select-option>
+                </ion-select>
+              </ion-item>
 
               <ion-item lines="none" class="toggle-line">
                 <ion-label>Autoriser les commentaires</ion-label>
                 <ion-toggle formControlName="allowComments"></ion-toggle>
               </ion-item>
 
-            
+              <div class="tags">
+                <ion-label>Tags</ion-label>
+                <div class="tag-input">
+                  <ion-input placeholder="Appuyez Entrée pour ajouter" (keyup.enter)="addTagFromInput($event)"></ion-input>
+                </div>
+                <div class="tag-list" *ngIf="tags.length">
+                  <ion-chip *ngFor="let t of tags.controls; let i = index">
+                    {{ t.value }}
+                    <ion-icon name="close" (click)="removeTag(i)" class="chip-close"></ion-icon>
+                  </ion-chip>
+                </div>
+              </div>
 
               <div class="actions-submit">
                 <ion-button type="submit" [disabled]="isUploading" size="large" class="submit-btn">

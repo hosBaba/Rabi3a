@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -20,7 +21,9 @@ const routes: Routes = [
   
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule),
+        canActivate: [authGuard] // 🛡️ محمي
+
   },
   {
     path: 'add-product',
@@ -37,6 +40,10 @@ const routes: Routes = [
   {
     path: 'video-product',
     loadChildren: () => import('./video-product/video-product.module').then( m => m.VideoProductPageModule)
+  },
+  {
+    path: 'log-with-phone',
+    loadChildren: () => import('./log-with-phone/log-with-phone.module').then( m => m.LogWithPhonePageModule)
   },
 ];
 

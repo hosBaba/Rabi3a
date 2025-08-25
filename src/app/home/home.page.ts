@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServicesService } from '../services.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,14 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  constructor(private router:Router) {}
+  constructor(private router:Router,private authService:ServicesService) {}
+
+
+ onlogout() {
+  this.authService.logout();
+}
+
+
   products = [
     {
       title: 'Womens Long Sweater',

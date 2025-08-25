@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationResult } from '@angular/fire/auth';
 import { ServicesService } from '../services.service';
 @Component({
   selector: 'app-log-with-phone',

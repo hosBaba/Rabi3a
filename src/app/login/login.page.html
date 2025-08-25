@@ -3,22 +3,20 @@
   <div class="login-form">
     <h2>Sign in</h2>
     <ion-item lines="none">
-      <ion-icon slot="start" name="mail-outline"></ion-icon>
-      <ion-input type="email" placeholder="demo@email.com"></ion-input>
+      <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
+      <ion-input  [(ngModel)]="phoneNumber" placeholder="votre telephone"></ion-input>
+    </ion-item>
+        <ion-button expand="block" class="bt"  (click)="sendOT()">Login</ion-button>
+
+
+    <ion-item lines="none" *ngIf="showOTP">
+      <ion-icon slot="start" name="barcode-outline"></ion-icon>
+      <ion-input   [(ngModel)]="otpCode" placeholder="Enter your password"></ion-input>
     </ion-item>
 
-    <ion-item lines="none">
-      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-      <ion-input type="password" placeholder="Enter your password"></ion-input>
-    </ion-item>
+    
+    <ion-button *ngIf="showOTP" expand="block" class="bt"  (click)="verifyOT()">Login</ion-button>
+      <div id="recaptcha-container"></div>
 
-    <div class="login-options">
-      <ion-checkbox slot="start"></ion-checkbox>
-      <label>Remember Me</label>
-      <a class="forgot">Forgot Password?</a>
-    </div>
-
-    <ion-button  expand="block" class="bt">Login</ion-button>
-    <div class="signup">Don't have an Account? <a>Sign up</a></div>
   </div>
 </ion-content>

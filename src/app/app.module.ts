@@ -9,24 +9,27 @@ import { AppRoutingModule } from './app-routing.module';
 
 
 import { environment } from 'src/environments/environment';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireAuthGuardModule } from '@angular/fire/compat/auth-guard';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, 
     IonicModule.forRoot(),
      AppRoutingModule,
-      AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule ,
-    AngularFireAuthGuardModule,AngularFireStorageModule
+ 
     ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },      
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),    
+    provideFirestore(() => getFirestore()),
+      provideFirestore(() => getFirestore()),
+      provideStorage(() => getStorage()) ,
+            provideAuth(() => getAuth()) 
+
+
+],
   bootstrap: [AppComponent],
 
 })

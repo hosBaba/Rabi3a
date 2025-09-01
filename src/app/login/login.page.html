@@ -1,22 +1,31 @@
 <ion-content class="login-bg">
-  <div class="header-shape"></div>
-  <div class="login-form">
-    <h2>Sign in</h2>
-    <ion-item lines="none">
-      <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
-      <ion-input  [(ngModel)]="phoneNumber" placeholder="votre telephone"></ion-input>
-    </ion-item>
-        <ion-button expand="block" class="bt"  (click)="sendOT()">Login</ion-button>
+  <div class="login-container">
 
+    <!-- Logo / Image -->
+    <div class="logo">
+      <img src="assets/logo3.png" alt="Google Login" />
+    </div>
 
-    <ion-item lines="none" *ngIf="showOTP">
-      <ion-icon slot="start" name="barcode-outline"></ion-icon>
-      <ion-input   [(ngModel)]="otpCode" placeholder="Enter your password"></ion-input>
-    </ion-item>
+    <!-- Title -->
+    <h2 class="title">Bienvenue 👋</h2>
+    <p class="subtitle">
+      Connectez-vous facilement avec votre compte Google
+    </p>
 
-    
-    <ion-button *ngIf="showOTP" expand="block" class="bt"  (click)="verifyOT()">Login</ion-button>
-      <div id="recaptcha-container"></div>
-
+    <!-- Google Button -->
+    <ion-button expand="block" color="light" class="google-btn" (click)="googleLogin()">
+      <ion-icon name="logo-google" slot="start"></ion-icon>
+      Continuer avec Google
+    </ion-button>
+     <!-- Google Button -->
+    <ion-button expand="block" color="light" class="facebook-btn" >
+      <ion-icon name="logo-facebook" slot="start"></ion-icon>
+      Continuer avec Facebook
+    </ion-button>
+     <!-- Google Button -->
+    <ion-button expand="block" color="light" class="apple-btn" >
+      <ion-icon name="logo-apple" slot="start"></ion-icon>
+      Continuer avec Apple
+    </ion-button>
   </div>
 </ion-content>

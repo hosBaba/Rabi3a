@@ -1,10 +1,11 @@
 <ion-header collapse="fade" class="app-header">
   <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
     <ion-title>Ajouter une image</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" [disabled]="isUploading" (click)="resetForm()">
-        Réinitialiser
-      </ion-button>
+      <ion-button fill="clear" (click)="form.reset(); imagePreview=null">Réinitialiser</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,58 +15,35 @@
     <ion-card class="glass">
       <ion-card-header>
         <ion-card-title>Informations</ion-card-title>
-        <ion-card-subtitle>Ajoutez un titre, une description et votre fichier vidéo</ion-card-subtitle>
+        <ion-card-subtitle>Ajoutez un titre, une description et votre fichier image</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
         <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
           <div class="grid">
             <div class="left">
-              <div class="dropzone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+              <div class="dropzone">
                 <ng-container *ngIf="!imagePreview; else previewTpl">
-  <ion-icon name="cloud-upload-outline" class="icon"></ion-icon>
-  <h3>Glissez-déposez votre image ici</h3>
-  <p>ou</p>
-  <ion-button size="small" (click)="triggerFileInput()">Choisir une image</ion-button>
-  <small class="muted">Formats pris en charge: JPG, PNG, WebP…</small>
-</ng-container>
+                  <ion-icon name="cloud-upload-outline" class="icon"></ion-icon>
+                  <h3>Glissez-déposez votre image ici</h3>
+                  <p>ou</p>
+                  <ion-button size="small" (click)="openFilePicker()">Choisir une image</ion-button>
+                </ng-container>
 
-<ng-template #previewTpl>
-  <img class="preview-img" [src]="imagePreview" alt="aperçu" />
-  <div class="file-meta" *ngIf="imageFile">
-    <ion-chip>{{ imageFile.name }}</ion-chip>
-    <ion-chip>{{ (imageFile.size / (1024*1024)) | number:'1.0-1' }} Mo</ion-chip>
-  </div>
-  <div class="actions">
-    <ion-button fill="outline" size="small" (click)="triggerFileInput()">Changer</ion-button>
-    <ion-button fill="clear" size="small" color="danger" (click)="resetForm()">Retirer</ion-button>
-  </div>
-</ng-template>
+                <ng-template #previewTpl>
+                  <img class="preview-img" [src]="imagePreview" alt="aperçu" />
+                  <div class="actions">
+                    <ion-button fill="outline" size="small" (click)="openFilePicker()">Changer</ion-button>
+                    <ion-button fill="clear" size="small" color="danger" (click)="imagePreview=null; imageFile=null; form.patchValue({file:null})">Retirer</ion-button>
+                  </div>
+                </ng-template>
 
-<!-- input caché -->
-<input id="imageInput" type="file" accept="image/*" (change)="onFileInputChange($event)" hidden>
-              </div>
-
-              <div *ngIf="isUploading" class="progress-wrap">
-                <ion-progress-bar [value]="uploadProgress"></ion-progress-bar>
-                <small>{{ (uploadProgress*100) | number:'1.0-0' }}%</small>
+                <!-- input caché -->
+                <input id="imageInput" type="file" accept="image/*" hidden (change)="onFileChange($event)">
               </div>
             </div>
 
             <div class="right">
-              <ion-item class="field" fill="outline">
-                <ion-label position="floating">Titre *</ion-label>
-                <ion-input formControlName="title" maxlength="80"></ion-input>
-              </ion-item>
-              <div class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
-                Le titre est requis (min 3 caractères).
-              </div>
-
-              <ion-item class="field" fill="outline">
-                <ion-label position="floating">Description</ion-label>
-                <ion-textarea formControlName="description" maxlength="500" autoGrow="true"></ion-textarea>
-              </ion-item>
-
               <ion-item class="field" fill="outline">
                 <ion-label>Catégorie</ion-label>
                 <ion-select interface="popover" formControlName="category">
@@ -74,32 +52,17 @@
               </ion-item>
 
               <ion-item class="field" fill="outline">
-                <ion-label>Visibilité</ion-label>
-                <ion-select interface="popover" formControlName="visibility">
-                  <ion-select-option *ngFor="let v of visibilities" [value]="v.value">{{ v.label }}</ion-select-option>
-                </ion-select>
+                <ion-label position="floating">Prix</ion-label>
+                <ion-input formControlName="prix" type="number"></ion-input>
               </ion-item>
 
-              <ion-item lines="none" class="toggle-line">
-                <ion-label>Autoriser les commentaires</ion-label>
-                <ion-toggle formControlName="allowComments"></ion-toggle>
+              <ion-item class="field" fill="outline">
+                <ion-label position="floating">Description</ion-label>
+                <ion-textarea formControlName="description" maxlength="500" autoGrow="true"></ion-textarea>
               </ion-item>
-
-              <div class="tags">
-                <ion-label>Tags</ion-label>
-                <div class="tag-input">
-                  <ion-input placeholder="Appuyez Entrée pour ajouter" (keyup.enter)="addTagFromInput($event)"></ion-input>
-                </div>
-                <div class="tag-list" *ngIf="tags.length">
-                  <ion-chip *ngFor="let t of tags.controls; let i = index">
-                    {{ t.value }}
-                    <ion-icon name="close" (click)="removeTag(i)" class="chip-close"></ion-icon>
-                  </ion-chip>
-                </div>
-              </div>
 
               <div class="actions-submit">
-                <ion-button type="submit" [disabled]="isUploading" size="large" class="submit-btn">
+                <ion-button type="submit" size="large" class="submit-btn" [disabled]="form.invalid">
                   <ion-icon slot="start" name="cloud-upload"></ion-icon>
                   Publier l'image
                 </ion-button>
@@ -111,4 +74,3 @@
     </ion-card>
   </div>
 </ion-content>
-

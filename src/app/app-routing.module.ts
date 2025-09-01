@@ -5,7 +5,9 @@ import { authGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+            canActivate: [authGuard] // 🛡️ محمي
+
   },
   {
     path: '',
@@ -27,11 +29,13 @@ const routes: Routes = [
   },
   {
     path: 'add-product',
-    loadChildren: () => import('./add-product/add-product.module').then( m => m.AddProductPageModule)
+    loadChildren: () => import('./add-product/add-product.module').then( m => m.AddProductPageModule),
+            canActivate: [authGuard] // 🛡️ محمي
+
   },
   {
     path: 'show-product',
-    loadChildren: () => import('./show-product/show-product.module').then( m => m.ShowProductPageModule)
+    loadChildren: () => import('./show-product/show-product.module').then( m => m.ShowProductPageModule),
   },
   {
     path: 'image-product',
@@ -41,10 +45,7 @@ const routes: Routes = [
     path: 'video-product',
     loadChildren: () => import('./video-product/video-product.module').then( m => m.VideoProductPageModule)
   },
-  {
-    path: 'log-with-phone',
-    loadChildren: () => import('./log-with-phone/log-with-phone.module').then( m => m.LogWithPhonePageModule)
-  },
+  
 ];
 
 @NgModule({

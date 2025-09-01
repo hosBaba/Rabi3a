@@ -1,6 +1,9 @@
 
 <ion-header collapse="fade" class="app-header">
   <ion-toolbar class="toolbar">
+       <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
     <ion-title>Ajouter une vidéo</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" [disabled]="isUploading" (click)="resetForm()">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services.service';
 
@@ -10,11 +10,14 @@ import { ServicesService } from '../services.service';
 })
 export class HomePage {
 
-  constructor(private router:Router,private authService:ServicesService) {}
+private router=inject(Router);
+private authService=inject(ServicesService);
+
 
 
  onlogout() {
   this.authService.logout();
+  this.router.navigateByUrl('/login')
 }
 
 

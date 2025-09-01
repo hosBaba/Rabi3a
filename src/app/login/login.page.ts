@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
+import { getAuth, GoogleAuthProvider, signInWithCredential,signInWithPopup,User } from '@angular/fire/auth';
+import { isPlatform } from '@ionic/angular';
 import { ServicesService } from '../services.service';
 
 @Component({
@@ -10,33 +14,15 @@ import { ServicesService } from '../services.service';
 })
 export class LoginPage implements OnInit {
 
-  phoneNumber: string = '';
-  otpCode: string = '';
-  showOTP: boolean = false;
-
-  constructor( private authService:ServicesService) { }
-
+private router= inject(Router);
+private auth=inject(ServicesService)
   ngOnInit() {
+    
   }
-
-
-    async sendOT() {
-    try {
-      await this.authService.sendOTP(this.phoneNumber);
-      this.showOTP = true;
-    } catch (err) {
-      console.error('Error sending OTP:', err);
-    }
-  }
-
-  async verifyOT() {
-    try {
-      const userCred = await this.authService.verifyOTP(this.otpCode);
-      console.log('User signed in:', userCred.user);
-      alert('تم تسجيل الدخول بنجاح!');
-    } catch (err) {
-      console.error('Invalid OTP:', err);
-      alert('رمز OTP غير صحيح!');
+ async googleLogin() {
+    const user = await this.auth.signInWithGoogle();
+    if (user) {
+      this.router.navigate(['/home']);
     }
   }
 }

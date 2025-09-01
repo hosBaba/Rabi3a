@@ -1,27 +1,18 @@
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { CanActivateFn, Router, UrlTree } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
-export const authGuard: CanActivateFn = (route, state) => {
-
- const auth = inject(Auth);
+export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
+  const auth = inject(Auth);
 
   return new Promise(resolve => {
-    auth.onAuthStateChanged(user => {
+    onAuthStateChanged(auth, user => {
       if (user) {
-        resolve(true); 
-        
-        
+        resolve(true);
       } else {
-        resolve(router.parseUrl('/login')); // 🚫 يوجهه للـ login
+        resolve(router.parseUrl('/login'));
       }
     });
   });
-
-
-
-
-
-  return true;
 };

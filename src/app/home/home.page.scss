@@ -1,3 +1,16 @@
+.example-viewport {
+  height: 400px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.example-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  border-bottom: 1px solid #eee;
+}
 
 
 .title{
@@ -64,3 +77,22 @@ ion-card {
     font-size: 20px;
   }
 }
+
+
+
+
+
+.viewport {
+  height: 100%; // يملأ الشاشة
+  width: 100%;
+}
+
+.product-card {
+  padding: 8px;
+}
+
+ion-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+

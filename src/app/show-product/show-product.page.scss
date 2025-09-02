@@ -1,90 +1,67 @@
-ion-content {
-  --background: #fff;
-}
+.product-page {
+  --background: #f9f9f9;
 
-.product-slider {
-  height: 300px;
-  img {
-    width: 80%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.product-card {
-  background: #fff;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  margin-top: -25px;
-  padding: 20px;
-
-  h1 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #3b0764;
-    margin: 0 0 8px 0;
-  }
-
-  .price-section {
+  .image-container {
+    width: 100%;
+    height: 280px;
     display: flex;
-    align-items: baseline;
-
-    .price {
-      font-size: 22px;
-      font-weight: bold;
-      color: #3b0764;
-    }
-
-    .currency {
-      font-size: 18px;
-      color: #6b7280;
-      margin-left: 3px;
-    }
-
-    .unit {
-      font-size: 16px;
-      color: #9ca3af;
-      margin-left: 4px;
-    }
-  }
-
-  .weight {
-    color: #10b981;
-    font-size: 14px;
-    margin: 5px 0 15px 0;
-  }
-
-  h2 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #3b0764;
-    margin: 0 0 5px 0;
-  }
-
-  .description {
-    font-size: 14px;
-    color: #9ca3af;
-    line-height: 1.4;
-    margin-bottom: 20px;
-  }
-
-  .actions {
-    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    background: #fff;
 
-    .favorite-btn {
-      --border-radius: 12px;
-      --border-color: #e5e7eb;
-      --color: #6b7280;
-      min-width: 50px;
-      height: 50px;
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+  }
+
+  .product-card {
+    margin-top: -30px;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+
+    .title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
-    .add-btn {
-      --background: #10b981;
-      --border-radius: 8px;
-      flex: 1;
+    .price-section {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 15px;
+
+      .price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #3880ff;
+      }
+      .currency {
+        font-size: 1.2rem;
+        margin-left: 5px;
+        color: #444;
+      }
+      .unit {
+        margin-left: 5px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .buy-button {
+      margin-top: 10px;
+      font-size: 1.1rem;
       font-weight: 600;
     }
   }

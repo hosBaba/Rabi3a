@@ -1,8 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
-import { getAuth, GoogleAuthProvider, signInWithCredential,signInWithPopup,User } from '@angular/fire/auth';
-import { isPlatform } from '@ionic/angular';
 import { ServicesService } from '../services.service';
 
 @Component({

@@ -1,6 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { ImageProduct } from '../image-product';
+import { ImageService } from '../image.service';
+import { RealtimedataService } from '../realtimedata.service';
+
 
 @Component({
   selector: 'app-image-product',
@@ -12,18 +16,23 @@ export class ImageProductPage implements OnInit {
   form!: FormGroup;
   imageFile?: File | null;
   imagePreview: string | ArrayBuffer | null = null;
+  produits: ImageProduct[] = [];
 
   categories = ['Phone','Mode', 'Sac', 'Chaussures', 'Autre'];
 
   private fb = inject(FormBuilder);
   private toastCtrl = inject(ToastController);
+    private imageservice = inject(ImageService);
+        private real = inject(RealtimedataService);
+
+
 
   constructor() {
     this.form = this.fb.group({
+      file: [null, Validators.required],   // 🔥 petit f (pas File)
+      category: ['', Validators.required],
       prix: ['', [Validators.required, Validators.minLength(1)]],
       description: ['', [Validators.maxLength(500)]],
-      category: ['', Validators.required],
-      file: [null, Validators.required],   // 🔥 petit f (pas File)
     });
   }
 
@@ -36,14 +45,9 @@ export class ImageProductPage implements OnInit {
       return;
     }
 
-    const produit = {
-      prix: this.form.value.prix,
-      description: this.form.value.description,
-      category: this.form.value.category,
-      file: this.imageFile
-    };
+    this.addProduit()
 
-    console.log('Produit à publier:', produit);
+    console.log('Produit à publier:');
 
     this.showToast('Produit ajouté avec succès ✅');
     this.form.reset();
@@ -83,4 +87,23 @@ export class ImageProductPage implements OnInit {
     });
     toast.present();
   }
+
+      //Ajouter le produit
+   async addProduit() {
+    const image=this.form.value.file;
+    const category=this.form.value.category;
+    const prix=this.form.value.prix;
+    const description=this.form.value.description;
+
+   const imageUrl = await this.imageservice.uploadImage(image, `imageProduct/${Date.now()}.jpg`);
+    const produit: ImageProduct = {
+      imageUrl,
+      prix,
+      category,
+      description
+    };
+    await this.real.addItem('produit',produit);
+  }
+
+
 }

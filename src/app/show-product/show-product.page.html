@@ -1,53 +1,35 @@
 <ion-header translucent>
- <ion-toolbar>
-     <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
-      </ion-buttons>
- </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Détails du produit</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content fullscreen *ngIf="product" class="product-page">
 
- <swiper-container [pagination]="true" class="product-slider">
-  <swiper-slide>
-    <img src="assets/bag.jpg" alt="Boston Lettuce" />
-  </swiper-slide>
-  <swiper-slide>
-    <img src="assets/shoe.jpeg" alt="Boston Lettuce" />
-  </swiper-slide>
-</swiper-container>
+  <!-- صورة المنتج -->
+  <div class="image-container">
+    <img [src]="product.imageUrl" alt="Produit" />
+  </div>
 
-  <!-- Carte produit -->
-  <div class="product-card">
-    <h1>Boston Lettuce</h1>
+  <!-- تفاصيل المنتج -->
+  <div class="product-card ion-padding">
+    <h1 class="title">{{ product.category }}</h1>
 
     <div class="price-section">
-      <span class="price">1.10</span>
+      <span class="price">{{ product.prix }}</span>
       <span class="currency">€</span>
-      <span class="unit"> / piece</span>
+      <span class="unit"> / pièce</span>
     </div>
 
-    <p class="weight">~ 150 gr / piece</p>
+    <p class="description">{{ product.description }}</p>
 
-    <h2>Spain</h2>
-    <p class="description">
-      Lettuce is an annual plant of the daisy family, Asteraceae.
-      It is most often grown as a leaf vegetable, but sometimes for its stem and seeds.
-      Lettuce is most often used for salads, although it is also seen in other kinds of food,
-      such as soups, sandwiches and wraps; it can also be grilled.
-    </p>
-
-    <!-- Boutons -->
-    <div class="actions">
-      <ion-button fill="outline" shape="round" class="favorite-btn">
-        <ion-icon name="heart-outline"></ion-icon>
-      </ion-button>
-
-      <ion-button expand="block" shape="round" class="add-btn">
-        <ion-icon name="cart-outline" slot="start"></ion-icon>
-        ADD TO CART
-      </ion-button>
-    </div>
+    <!-- زر إضافة للسلة -->
+    <ion-button expand="block" color="primary" shape="round" class="buy-button">
+      Ajouter au panier
+    </ion-button>
   </div>
 
 </ion-content>

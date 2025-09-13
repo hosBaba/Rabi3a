@@ -1,25 +1,10 @@
-.example-viewport {
-  height: 400px;
-  width: 100%;
-  border: 1px solid #ccc;
-}
-
-.example-item {
-  height: 50px;
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-  border-bottom: 1px solid #eee;
-}
-
 
 .title{
  text-align: center;
-   color: black;
       font-size: 20px;
-      margin: 12px 0;
-        font-family: "Times New Roman", Times, serif;
-        font-style: normal;
+      margin: 20px 0;
+      height: 50%;
+     
 
 }
 
@@ -29,70 +14,65 @@
 
 }
 
-.toolbarSesrch{
-   
-}
-
-
-
-ion-card {
-  border-radius: 16px;        /* زوايا ناعمة */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* ظل ناعم */
-  overflow: hidden;           /* حتى الصورة تكون مقصوصة بزوايا الكارد */
-  transition: transform 0.2s ease-in-out;
-  ion-img {
-    height: 170px;
-    object-fit: cover;
-  }
-
-  .price {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-
-    .sale-price {
-      color: red;
-      font-weight: bold;
-    }
-
-    .old-price {
-      color: gray;
-      text-decoration: line-through;
-      font-size: 14px;
-    }
-  }
-
-  .title {
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 4px;
-  }
-
-  .heart-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    z-index: 10;
-    color: red;
-    font-size: 20px;
-  }
-}
-
-
 
 
 
 .viewport {
-  height: 100%; // يملأ الشاشة
+  height: 100vh; /* ضروري */
   width: 100%;
 }
 
-.product-card {
-  padding: 8px;
+.fullscreen-viewport {
+  scroll-snap-type: y mandatory; /* يعطي swipe مثل TikTok */
+  overflow-y: scroll;
 }
 
-ion-card {
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.fullscreen-item {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  scroll-snap-align: start;
 }
 
+.fullscreen-media {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 32px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+
+.grid-viewport .products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 16px;
+}
+
+.grid-viewport .product-card {
+  width: 100%;
+}

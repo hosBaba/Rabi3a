@@ -1,8 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { Database, ref as dbRef, set, push, onValue, remove } from '@angular/fire/database';
-import { getDownloadURL, ref as storageRef, Storage, uploadBytes } from '@angular/fire/storage';
+import { getDownloadURL, ref as storageRef, Storage, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { ImageProduct } from './image-product';
+import { VideoProduct } from './video-product';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ export class RealtimedataService {
 
   private db = inject(Database);
   private storage = inject(Storage);
+  private ngZone = inject(NgZone);
+
 
   // إضافة عنصر
   addItem(path: string, data: any) {
@@ -41,6 +44,28 @@ getItems(path: string): Observable<ImageProduct[]> {
   });
 }
 
+
+  // قراءة كل العناصر
+ videoItems(path: string): Observable<VideoProduct[]> {
+  return new Observable((observer) => {
+    const listRef = dbRef(this.db, path); // ✅ استخدم dbRef هنا
+
+    const unsubscribe = onValue(
+      listRef,
+      (snapshot) => {
+        const items: VideoProduct[] = [];
+        snapshot.forEach((childSnap) => {
+          items.push({ id: childSnap.key!, ...childSnap.val() });
+        });
+        observer.next(items);
+      },
+      (error) => observer.error(error)
+    );
+
+    // تنظيف الاشتراك عند الانتهاء
+    return () => unsubscribe();
+  });
+}
 
 
   // حذف عنصر
@@ -82,6 +107,33 @@ getItems(path: string): Observable<ImageProduct[]> {
       );
 
       return () => unsubscribe();
+    });
+  }
+
+
+  // uplod video
+
+async uploadVideo(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const filePath = `videos/${Date.now()}_${file.name}`;
+      const storRef = storageRef(this.storage, filePath);
+      const uploadTask = uploadBytesResumable(storRef, file);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => reject(error),
+        async () => {
+          // ✅ نرجع للـ Angular Zone عشان نتفادى الخطأ
+          this.ngZone.run(async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve(downloadURL);
+          });
+        }
+      );
     });
   }
 

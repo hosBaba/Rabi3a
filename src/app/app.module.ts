@@ -16,6 +16,8 @@ import { provideStorage, getStorage } from '@angular/fire/storage'
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, 
@@ -25,7 +27,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },      
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),    
-    provideFirestore(() => getFirestore()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()) ,
     provideAuth(() => getAuth()) ,

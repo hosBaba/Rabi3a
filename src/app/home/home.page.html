@@ -1,5 +1,3 @@
-
-
 <ion-menu side="start" contentId="main-content">
   <ion-header>
     <ion-toolbar class="toolbar2">
@@ -7,75 +5,107 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-
-    
     <ion-list>
-      <ion-item button routerLink="/home">
+      <ion-item button routerLink="/test">
         <ion-icon slot="start" name="home-outline"></ion-icon>
         <ion-label>Home</ion-label>
       </ion-item>
-
       <ion-item button routerLink="/profile">
         <ion-icon slot="start" name="person-outline"></ion-icon>
         <ion-label>Profile</ion-label>
       </ion-item>
 
-    <ion-item-group>
-  <ion-item-divider>
-    <ion-label>Add Product</ion-label>
-  </ion-item-divider>
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Add Product</ion-label>
+        </ion-item-divider>
+        <ion-item button routerLink="/image-product">
+          <ion-icon slot="start" name="image-outline"></ion-icon>
+          <ion-label>Add Image</ion-label>
+        </ion-item>
+        <ion-item button routerLink="/video-product">
+          <ion-icon slot="start" name="videocam-outline"></ion-icon>
+          <ion-label>Add Video</ion-label>
+        </ion-item>
+      </ion-item-group>
 
-  <ion-item button routerLink="/image-product">
-    <ion-icon slot="start" name="image-outline"></ion-icon>
-    <ion-label>Add Image</ion-label>
-  </ion-item>
-
-  <ion-item button routerLink="/video-product">
-    <ion-icon slot="start" name="videocam-outline"></ion-icon>
-    <ion-label>Add Video</ion-label>
-  </ion-item>
-</ion-item-group>
-
-
-       <ion-item button (click)="onlogout()">
-    <ion-icon slot="start" name="log-out-outline"></ion-icon>     
-    <ion-label>Log-out</ion-label>
+      <ion-item button (click)="onlogout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        <ion-label>Log-out</ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
 
-<!-- Main page -->
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar class="toolbar">
       <ion-title class="title">Shop</ion-title>
       <ion-buttons slot="end">
-        <!-- زر فتح القائمة -->
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content class="ion-padding">
-  <ion-content>
-  <cdk-virtual-scroll-viewport itemSize="220" class="viewport">
-    <div *cdkVirtualFor="let product of products" class="product-card">
-      <ion-card>
-<img [src]="product.imageUrl" alt="product image"   [routerLink]="['/show-product', product.id]"
-/>
+<ion-content  fullscreen>
+
+
+  <!-- Segment fixé en haut -->
+  <div class="segment-container">
+    <ion-segment [(ngModel)]="displayMode" color="primary">
+      <ion-segment-button value="image">
+        <ion-label>Image</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="video">
+        <ion-label>Vidéo</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Images en virtual scroll -->
+  <cdk-virtual-scroll-viewport *ngIf="displayMode==='image'" itemSize="220" class="viewport grid-viewport">
+  <div class="products-grid">
+    <div *cdkVirtualFor="let product of imageProducts" class="product-card">
+      <ion-card [routerLink]="['/show-product', product.id]">
+        <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="product image"/>
         <ion-card-header>
           <ion-card-title>{{ product.category }}</ion-card-title>
           <ion-card-subtitle>{{ product.prix | currency:'EUR' }}</ion-card-subtitle>
         </ion-card-header>
-
-        <ion-card-content>
-          {{ product.description }}
-        </ion-card-content>
+        <ion-card-content>{{ product.description }}</ion-card-content>
       </ion-card>
     </div>
-  </cdk-virtual-scroll-viewport>
-</ion-content>
+  </div>
+</cdk-virtual-scroll-viewport>
+  <!-- Videos style TikTok -->
+  <cdk-virtual-scroll-viewport *ngIf="displayMode==='video'" itemSize="100vh" class="viewport fullscreen-viewport">
+  <div *cdkVirtualFor="let video of allVideos; let i = index; trackBy: trackByFn" class="fullscreen-item">
+
+    <div class="video-wrapper">
+      <video #videoPlayer
+             [src]="video.videoUrl"   
+             class="fullscreen-media"
+             muted
+             loop
+             playsinline
+            (loadedmetadata)="onVideoLoad(videoPlayer)">
+
+      </video>
+
+      <!-- زر التشغيل / الإيقاف -->
+      <button class="play-btn" (click)="togglePlay(videoPlayer)">
+        <ion-icon [name]="videoPlayer.paused ? 'play' : 'pause'"></ion-icon>
+      </button>
+    </div>
+
+    <div class="overlay">
+      <h3>{{ video.category }}</h3>
+      <p>{{ video.description }}</p>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>
+
+
 
   </ion-content>
 </div>

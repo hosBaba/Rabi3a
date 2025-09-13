@@ -49,6 +49,11 @@ const routes: Routes = [
     path: 'video-product',
     loadChildren: () => import('./video-product/video-product.module').then( m => m.VideoProductPageModule)
   },
+  {
+    path: 'userinfo',
+    loadChildren: () => import('./userinfo/userinfo.module').then( m => m.UserinfoPageModule)
+  },
+ 
   
 ];
 

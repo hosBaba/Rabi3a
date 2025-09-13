@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
+import { RealtimedataService } from '../realtimedata.service';
+import { ImageProduct } from '../image-product';
+import { VideoProduct } from '../video-product';
 @Component({
   selector: 'app-video-product',
   templateUrl: './video-product.page.html',
@@ -14,29 +17,30 @@ videoFile?: File | null;
 videoPreview?: string | null;
 uploadProgress = 0; // 0..1
 isUploading = false;
+  produits: ImageProduct[] = [];
 
 
-categories = ['Tutoriel', 'Produit', 'Annonce', 'Divertissement', 'Autre'];
-visibilities = [
-{ value: 'public', label: 'Public' },
-{ value: 'private', label: 'Privé' },
-{ value: 'unlisted', label: 'Non répertorié' }
-];
+  categories = ['Phone','Mode', 'Sac', 'Chaussures', 'Autre'];
+
+private fb=inject(FormBuilder);
+private toastCtrl=inject(ToastController);
+private real=inject(RealtimedataService);
 
 
-constructor(private fb: FormBuilder, private toastCtrl: ToastController) {}
+
+
+constructor() {
+this.form = this.fb.group({
+description: ['', [Validators.maxLength(500)]],
+category: ['Produit', Validators.required],
+video: [null, Validators.required],
+});
+
+}
  
 
   ngOnInit(): void {
-this.form = this.fb.group({
-title: ['', [Validators.required, Validators.minLength(3)]],
-description: ['', [Validators.maxLength(500)]],
-category: ['Produit', Validators.required],
-visibility: ['public', Validators.required],
-allowComments: [true],
-tags: this.fb.array<string>([]),
-video: [null, Validators.required],
-});
+
 }
 
 
@@ -108,6 +112,7 @@ const interval = setInterval(() => {
 if (this.uploadProgress >= 1) {
 clearInterval(interval);
 this.isUploading = false;
+this.addProduit(),
 this.presentToast('Vidéo téléchargée avec succès !');
 this.resetForm();
 } else {
@@ -119,7 +124,6 @@ this.uploadProgress = Math.min(1, this.uploadProgress + 0.07);
 
 resetForm() {
 this.form.reset({ category: 'Produit', visibility: 'public', allowComments: true });
-this.tags.clear();
 this.videoFile = null;
 if (this.videoPreview) URL.revokeObjectURL(this.videoPreview);
 this.videoPreview = null;
@@ -140,4 +144,21 @@ triggerFileInput() {
   const input = document.getElementById('videoInput') as HTMLInputElement;
   input?.click();
 }
+
+     //Ajouter le produit
+   async addProduit() {
+    const video=this.form.value.video;
+    const category=this.form.value.category;
+    const prix=this.form.value.prix;
+    const description=this.form.value.description;
+
+   const videoUrl = await this.real.uploadVideo(video);
+    const produit: VideoProduct = {
+  videoUrl:videoUrl,
+  category: category,
+  description:description,
+    };
+    await this.real.addItem('video-produit',produit);
+  }
+
 }

@@ -14,7 +14,7 @@ export class HomePage  {
   private authService = inject(ServicesService);
   private real = inject(RealtimedataService);
 
-  displayMode: string = 'video';
+  displayMode: string = 'image';
   imageProducts: any[] = [];
   allVideos: any[] = [];
 imagePairs: any[] = [];
@@ -130,4 +130,15 @@ imagePairs: any[] = [];
   trackByFn(index: number, item: any): string {
     return item.id || index.toString();
   }
+
+  likeVideo(video: any) {
+  console.log('Liked video', video.id);
+  // هنا يمكن تحديث الـ likes في Firebase
+}
+
+commentVideo(video: any) {
+  console.log('Comment on video', video.id);
+  // هنا يمكن فتح modal أو صفحة التعليقات
+}
+
 }

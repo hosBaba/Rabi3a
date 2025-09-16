@@ -4,17 +4,24 @@ import { getDownloadURL, ref as storageRef, Storage, uploadBytes, uploadBytesRes
 import { Observable } from 'rxjs';
 import { ImageProduct } from './image-product';
 import { VideoProduct } from './video-product';
+import { Auth, authState, User } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RealtimedataService {
+  user$: Observable<User | null> ;
+  private auth =inject(Auth)
 
   private db = inject(Database);
   private storage = inject(Storage);
   private ngZone = inject(NgZone);
 
+constructor(){
 
+      this.user$ = authState(this.auth);
+
+}
   // إضافة عنصر
   addItem(path: string, data: any) {
     const listRef = dbRef(this.db, path);

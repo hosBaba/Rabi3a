@@ -11,17 +11,61 @@
 <ion-content fullscreen>
 
   <!-- Profile Card -->
-  <div class="profile-card">
-<ion-avatar>
-  <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-</ion-avatar>    <div class="profile-info">
-      <h2>Itunuoluwa Abidoye</h2>
-      <p>@Itunuoluwa</p>
+  <div class="profile-card" *ngIf="userInfo">
+    <ion-avatar>
+      <img
+        alt="User avatar"
+        src="https://ionicframework.com/docs/img/demos/avatar.svg"
+      />
+    </ion-avatar>
+    <div class="profile-info">
+      <h2>{{ userInfo?.name }}</h2>
+      <p>phone:  {{ userInfo?.phone }}</p>
     </div>
-    <ion-button fill="clear" class="edit-btn">
-      <ion-icon name="pencil-outline"></ion-icon>
+
+    <!-- زر فتح مودال التحديث -->
+    <ion-button class="edit-btn"  (click)="openUpdateModal()">
+    <ion-icon name="pencil-outline"></ion-icon>    
     </ion-button>
+     </div>
+
+  <div *ngIf="!userInfo" class="ion-text-center">
+    <ion-spinner></ion-spinner>
+    <p>Chargement du profil...</p>
   </div>
+
+  <!-- مودال تحديث البيانات -->
+  <ion-modal [isOpen]="showModal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modifier Profil</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">Fermer</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <form [formGroup]="updateForm" (ngSubmit)="saveUpdate()">
+          <ion-item>
+            <ion-label position="floating">Nom</ion-label>
+            <ion-input formControlName="name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Téléphone</ion-label>
+            <ion-input formControlName="phone"></ion-input>
+          </ion-item>
+
+          <ion-button expand="full" type="submit" [disabled]="updateForm.invalid">
+            Sauvegarder
+          </ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
 
   <!-- Settings List -->
   <ion-list lines="none" class="settings-list">
@@ -36,7 +80,7 @@
       <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
     </ion-item>
 
-    <ion-item button>
+    <ion-item button   (click)="logout()">
       <ion-icon name="log-out-outline" slot="start" color="medium"></ion-icon>
       <ion-label>
         <h3>Deconexion</h3>
